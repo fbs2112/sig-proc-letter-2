@@ -19,10 +19,11 @@ w3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta
 meanCount = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
 blindIt = zeros(maxIt,length(delayVector),length(N),length(modulationIndexVector),length(eta));
 
+maxIt = 20;
 
-for etaIndex = 1:length(eta)
+for etaIndex = 1:1%length(eta)
     
-    for modulationIndexLoop = 1:length(modulationIndexVector)
+    for modulationIndexLoop = 1:1%length(modulationIndexVector)
       
         modulationIndex = modulationIndexVector(modulationIndexLoop);
         maxVoltage = VDC*(1+modulationIndex);
@@ -44,8 +45,16 @@ for etaIndex = 1:length(eta)
                     mu = zeros(globalLength,1);
                     d = zeros(globalLength,1);
                     e = zeros(globalLength,1);
-                    G = zeros(adapFiltLength(NIndex),adapFiltLength(NIndex),globalLength);
-
+                    
+                    
+                    P = zeros(adapFiltLength(NIndex),adapFiltLength(NIndex),globalLength);
+                    P(:,:,adapFiltLength(NIndex) + max(delayVector2)) = eye(adapFiltLength(NIndex))*1e-6;
+                    sigma = zeros(globalLength,1);
+                    sigma(adapFiltLength(NIndex) + delayVector(delay)) = 1;
+                    delta = zeros(globalLength,1);
+                    lambda = zeros(globalLength,1);
+                    G = zeros(globalLength,1);
+                    
                     x = zeros(N(NIndex),globalLength);
                     medianAux = zeros(globalLength,1);
                     y = zeros(globalLength,1);
@@ -101,7 +110,7 @@ for etaIndex = 1:length(eta)
 
                     xAux = [zeros(N(NIndex)-1,1);receivedVoltageSignal];
 
-                    w = zeros(adapFiltLength(NIndex),globalLength) + 1e-6;
+                    theta = zeros(adapFiltLength(NIndex),globalLength);
                     gammaAux = zeros(globalLength,1);
 
                     blindFlag = 0;
@@ -119,7 +128,7 @@ for etaIndex = 1:length(eta)
                         xAP = [x(:,k);xTDLAux];
 
 
-                        y(k) = w(:,k)'*xAP;
+                        y(k) = theta(:,k)'*xAP;
 
 
                         if k > (adapFiltLength(NIndex) + max(delayVector2)) + 100
@@ -141,30 +150,40 @@ for etaIndex = 1:length(eta)
                             %                         d(k) = pammod(pamdemod(y(k),pamOrder,0,'gray'),pamOrder,0,'gray');
                         end
 
-                        e(k) = d(k) - y(k);
+                        delta(k) = d(k) - theta(:,k)'*xAP;
 
                         %
-                        gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
+                        gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*theta(:,k)'*theta(:,k)*noisePower);
 
                         barGamma = sqrt(pi)*gammaAux(k+1)/2;
                         % %
                         barGamma = 4*sqrt(5*noisePower);
 
-                        maxError = max(abs(real(e(k))),abs(imag(conj(e(k)))));
+                        maxError = max(abs(real(delta(k))),abs(imag(conj(delta(k)))));
 
-                        if maxError > barGamma
-                            mu(k) = 1 - barGamma/maxError;
-                            G(:,:,k) = diag(((1 - kappa*mu(k))/adapFiltLength(NIndex)) + (kappa*mu(k)*abs(w(:,k))/norm(w(:,k),1)));
-                            w(:,k+1) = w(:,k) + mu(k)*G(:,:,k)*xAP*((xAP'*G(:,:,k)*xAP+gamma*eye(1))\eye(1))*conj(e(k));
+                        if abs(delta(k)) > barGamma
+                            G(k) = xAP.'*P(:,:,k)*conj(xAP);
+                            lambda(k) = (1/G(k))*((abs(delta(k))/barGamma) - 1);
+                            lambda2 = 1/lambda(k);
+                            
+                            
+                            P(:,:,k+1) = lambda(k)*(P(:,:,k) - (P(:,:,k)*conj(xAP)*xAP.'*P(:,:,k))/(lambda2+G(k)));
+                            
+                            
+                            theta(:,k+1) = theta(:,k) + P(:,:,k+1)*conj(xAP)*delta(k);
+                            
+                            sigma(k+1) = sigma(k) - (lambda(k)*delta(k)^2)/(1+lambda(k)*G(k)) + lambda(k)*delta(k)^2;
+                            
                             count(k,index) = 1;
                         else
-                            mu(k) = 0;
-                            count(k,index) = 0;
-                            w(:,k+1) = w(:,k);
+                            lambda(k) = 0;
+                            P(:,:,k+1) = P(:,:,k);
+                            theta(:,k+1) = theta(:,k);
+                            sigma(k+1) = sigma(k);
                         end
                     end
-                    wIndex(:,:,index) = conj(w(:,1:globalLength));
-                    e2(:,index) = abs(e).^2;
+                    wIndex(:,:,index) = conj(theta(:,1:globalLength));
+                    e2(:,index) = abs(delta).^2;
 
                 end
                 meanCount{delay,NIndex,modulationIndexLoop,etaIndex} = mean(count,2);
@@ -187,13 +206,13 @@ for etaIndex = 1:length(eta)
 %      meanCount4{etaIndex} = meanCount3;
 end
 
-% for i = 1:length(eta)
-%     plot(10*log10(e3{1,1,1,i}))
-%     hold on
-% end
+for i = 1:length(eta)
+    plot(10*log10(e3{1,1,1,i}))
+    hold on
+end
 % 
 % legend(eta.')
-save(['.' filesep 'results' filesep 'results01.mat'],'w3','e3','meanCount','blindIt');
+% save(['.' filesep 'results' filesep 'results01.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);

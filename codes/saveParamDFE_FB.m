@@ -3,26 +3,23 @@ clc;
 close all;
 
 
+
+addpath(['.' filesep 'LED Parameters']);
+
+load whiteLED_334-15.mat;
+
+%--------------Simulation parameters--------------------------------------%
+
 maxRuns = 10000; % max runs in a single independent trial
 maxIt = 1000;    %number of independent trial
 signalPower = 1;    %desired input signal power
 noisePower = 1e-3;  %desired measurement noise power
+changingIteration = 5000;
+blindIteration = 1500;
+alpha = 0.9;
+beta = 0.45;
 
-alpha = 0.01;      %forgetting factor of the correlation matrix in SML case
-
-K = 2;             %number of products in the SML case
-M = 10;            %length of the adaptiv filter in SML case
-mu = 0.1;         %step size
-
-h(:,1) = [0.5 3 5 0 0.3 0 0 1.2 0].';
-h(:,2) = [0.5 3 0 0.5 0.001 0.3 0 0 0].';
-h(:,2) = [2 0 0 0.2 0.3 -0.7 0 0 0].'; 
-
-
-h1 = [0.544 -0.252 0.593 0.236 -0.077 0.156 -0.5 0.025 -0.023 0.099].';
-h2 = [-0.204 0.274 0.023 0.024 0.022 -0.274 -0.321 -0.070 0.712 0.433].';
-
-ho = kron(h1,h2); %unknown system in SML case
+%--------------Simulation parameters--------------------------------------%
 
 
 %-------------------------------------------------------------------------%
@@ -40,6 +37,9 @@ volterraFBFlag = 1;
 feedforwardLength = 1:5;
 feedbackLength = 1:5;
 
+
+feedforwardLength = 12;
+feedbackLength = 12;
 
 adaptfiltFF = zeros(length(feedforwardLength),1);
 l1FF = cell(length(feedforwardLength),1);
@@ -83,15 +83,66 @@ auxMatrix = triu(ones(memoryChannelLength));
 [l1Pilot,l2Pilot] = find(auxMatrix);
 
 
-
 barGamma = 4*sqrt(5*noisePower); %threshold for set-membership purposes
 
 
 numberOfBits = 2;
-changingIteration = 5000;
 
 pamOrder = 2^numberOfBits;
 
 SNR = db2pow(30);
 
+
+%-------------------------Adaptive Filtering Parameters--------------------
+
+delayinSamples = 13;
+
+%-------------------------Adaptive Filtering Parameters--------------------
+
+
+%-------------------------LED Parameters-----------------------------------
+
+Poptical = @(ledLuminousEfficacy,electricalPower,k) (ledLuminousEfficacy.*electricalPower)./((1 + (ledLuminousEfficacy.*electricalPower./(maxLuminousIntensityLED/1000)).^(2*k)).^(1/(2*k)));
+
+%-------------------------LED Parameters-----------------------------------
+
+
+%-------------------------Photodiode Parameters----------------------------
+
+A = 1e-4; %photodiode area (cm)
+d = 10e-2; %distance between LED and photodiode (cm)
+R = 0.5;
+FOV = deg2rad(25);
+
+%-------------------------Photodiode Parameters----------------------------
+
+
+%-------------------------Pre Amplifier Parameters-------------------------
+
+%-------------------------Pre Amplifier Parameters-------------------------
+
+
+%-------------------------Transmission Parameters--------------------------
+
+kNonLinearity = 2;
+
+LEDfreqRespPoints = 1000;
+
+fs = 2e6;
+
+theta = 0;
+phi = 0;
+
+H_0 = A/d^2 * (n+1)/(2*pi) * cos(phi)^n * cos(theta) * rectangularPulse(-1,1,theta/FOV);
+
+VDC = 3.25;
+maxAbsoluteValueModulation = 3;
+
+maxModulationIndex = (maxLEDVoltage - VDC)/VDC;
+modulationIndexVector = [0.05 0.075 0.1];
+
+
 save(['.' filesep 'simParameters' filesep 'paramDFE_FB.mat']);
+
+rmpath(['.' filesep 'LED Parameters']);
+
