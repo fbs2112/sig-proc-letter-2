@@ -238,7 +238,7 @@ end
 % end
 % 
 % legend(eta.')
-save(['.' filesep 'results' filesep 'results08.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'results12.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);
