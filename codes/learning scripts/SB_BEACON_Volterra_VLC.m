@@ -19,17 +19,17 @@ w3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta
 meanCount = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
 blindIt = zeros(maxIt,length(delayVector),length(N),length(modulationIndexVector),length(eta));
 
-maxIt = 20;
+% maxIt = 10;
 
-for etaIndex = 1:1%length(eta)
+for etaIndex = 1:length(eta)
     
-    for modulationIndexLoop = 1:1%length(modulationIndexVector)
+    for modulationIndexLoop = 1:length(modulationIndexVector)
       
         modulationIndex = modulationIndexVector(modulationIndexLoop);
         maxVoltage = VDC*(1+modulationIndex);
         deltaV = maxVoltage - VDC;
 
-        for NIndex = 1:1%length(N)
+        for NIndex = 1:length(N)
             
             for delay = 1:1
 
@@ -43,9 +43,7 @@ for etaIndex = 1:1%length(eta)
                     index
                     
                     mu = zeros(globalLength,1);
-                    d = zeros(globalLength,1);
-                    e = zeros(globalLength,1);
-                    
+                    d = zeros(globalLength,1);                    
                     
                     P = zeros(adapFiltLength(NIndex),adapFiltLength(NIndex),globalLength);
                     P(:,:,adapFiltLength(NIndex) + max(delayVector2)) = eye(adapFiltLength(NIndex))*1e-6;
@@ -132,7 +130,7 @@ for etaIndex = 1:1%length(eta)
 
 
                         if k > (adapFiltLength(NIndex) + max(delayVector2)) + 100
-                            medianAux(k) = median(abs(e(k-1 - 100:k-1)));
+                            medianAux(k) = median(abs(delta(k-1 - 100:k-1)));
                             if medianAux(k) <= 2*eta(etaIndex) || blindFlag == 1
                                 d(k) = pamHardThreshold(y(k));
 
@@ -206,13 +204,15 @@ for etaIndex = 1:1%length(eta)
 %      meanCount4{etaIndex} = meanCount3;
 end
 
-for i = 1:length(eta)
-    plot(10*log10(e3{1,1,1,i}))
-    hold on
-end
+% for i = 1:length(eta)
+%     figure;
+%     x = e3{1,1,1,i};
+%     aux = find(x,1);
+%     plot(10*log10(x(aux:end)))
+% end
 % 
 % legend(eta.')
-% save(['.' filesep 'results' filesep 'results01.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'results05.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);
