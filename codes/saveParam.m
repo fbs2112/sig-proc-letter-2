@@ -10,8 +10,8 @@ load whiteLED_334-15.mat;
 
 %--------------Simulation parameters--------------------------------------%
 
-maxRuns = 10000; % max runs in a single independent trial
-maxIt = 1000;    %number of independent trial
+maxRuns = 5000; % max runs in a single independent trial
+maxIt = 100;    %number of independent trial
 signalPower = 1;    %desired input signal power
 noisePower = 1e-3;  %desired measurement noise power
 changingIteration = 5000;
