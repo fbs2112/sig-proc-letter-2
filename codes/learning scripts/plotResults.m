@@ -53,41 +53,45 @@ figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'fig
 %     c3(i) = mean(meanCount3{i,1}{1}{1}(aux:it));
 % end
 % 
-% fileIndex = [1 5];
-% 
-% 
-% colorCell = {'b','r','y'};
-% 
-% for k = 1:length(fileIndex)
-%     load(['results0' num2str(fileIndex(k)) '.mat']);
-%     for i = 1:size(e3,4)
-%         figure
-%         for j = 1:size(e3,3)
-%             x = e3{1,1,j,i};
-%             blindItAux = blindIt(:,1,1,j,i);
-%             meanBlindIt(k,j,i) = round(mean(blindItAux));
-%             aux = find(x,1);
-% %             if j~=size(e3,3) && i ~= size(e3,4) && k~=2
-%                 plot(10*log10(x(aux:end)));
+fileIndex = [1 5];
+
+
+colorCell = {'b','r','y'};
+
+for k = 1:length(fileIndex)
+    load(['results0' num2str(fileIndex(k)) '.mat']);
+    for i = 1:size(e3,4)
+        figure
+        for j = 1:size(e3,3)
+            x = e3{1,1,j,i};
+            blindItAux = blindIt(:,1,1,j,i);
+            meanBlindIt(k,j,i) = round(mean(blindItAux));
+            aux = find(x,1);
+%             if j~=size(e3,3) && i ~= size(e3,4) && k~=2
+                plot(10*log10(x(aux:end)));
 %                 line([meanBlindIt(k,j,i) meanBlindIt(k,j,i)], [-20 10],'Color',colorCell{j});
-%                  if i > 1 && meanBlindIt(k,j,i)
-%                     upCountTrans(k,j,i) = mean(meanCount{1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
-%                     upCountSS(k,j,i) = mean(meanCount{1,1,j,i}(meanBlindIt(k,j,i):end))*100;
-%                 else
-%                     upCount(k,j) = mean(meanCount{1,1,j,i})*100;
-%                 end
-%                 hold on
-% %             end
-%         end
-%         H = legend('$\mathrm{MI} = 0.05$','$\mathrm{MI} = 0.075$','$\mathrm{MI} = 0.1$');
-%         set(H,'interpreter','latex')
-%         
-%         ylabel('MSE [dB]','interpreter','latex');
-%         xlabel('Iterations','interpreter','latex');
-%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
-% 
-%     end
-% end
+                 if i > 1 && meanBlindIt(k,j,i)
+                    upCountTrans(k,j,i) = mean(meanCount{1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
+                    upCountSS(k,j,i) = mean(meanCount{1,1,j,i}(meanBlindIt(k,j,i):end))*100;
+                else
+                    upCount(k,j) = mean(meanCount{1,1,j,i})*100;
+                end
+                hold on
+%             end
+        end
+        H = legend('$\mathrm{MI} = 0.05$','$\mathrm{MI} = 0.075$','$\mathrm{MI} = 0.1$');
+        set(H,'interpreter','latex')
+        
+        ylabel('MSE [dB]','interpreter','latex');
+        xlabel('Iterations','interpreter','latex');
+        line([meanBlindIt(k,1,i) meanBlindIt(k,1,i)], [-20 10],'Color',colorCell{1});
+        line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
+        line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
+        xlim([0 5000]);
+%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
+
+    end
+end
 
 % clear 
 figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'figDim', [1 1 800 600]);  
