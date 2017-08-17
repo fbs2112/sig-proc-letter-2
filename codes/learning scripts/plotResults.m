@@ -53,7 +53,7 @@ figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'fig
 %     c3(i) = mean(meanCount3{i,1}{1}{1}(aux:it));
 % end
 % 
-fileIndex = [1 5];
+fileIndex = [1 9];
 
 
 colorCell = {'b','r','y'};
@@ -88,12 +88,18 @@ for k = 1:length(fileIndex)
         line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
         line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
         xlim([0 5000]);
-%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
 
     end
 end
 
-% clear 
+
+close all;
+clear 
+
+linewidth = 1.5;
+fontname = 'Times';
+fontsize = 24;
 figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'figDim', [1 1 800 600]);  
 
 % 
@@ -111,7 +117,7 @@ for k = 1:length(fileIndex)
             meanBlindIt(k,j,i) = round(mean(blindItAux));
             aux = find(x,1);
             plot(10*log10(x(aux:end)));
-            line([meanBlindIt(k,j,i) meanBlindIt(k,j,i)], [-15 10],'Color',colorCell{j});
+%             line([meanBlindIt(k,j,i) meanBlindIt(k,j,i)], [-15 10],'Color',colorCell{j});
             if i > 1 && meanBlindIt(k,j,i)
                 upCountTrans(j,i) = mean(meanCount{1,1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
                 upCountSS(j,i) = mean(meanCount{1,1,1,j,i}(meanBlindIt(k,j,i):end))*100;
@@ -127,7 +133,12 @@ for k = 1:length(fileIndex)
         
         ylabel('MSE [dB]','interpreter','latex');
         xlabel('Iterations','interpreter','latex');
-%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
+        
+        line([meanBlindIt(k,1,i) meanBlindIt(k,1,i)], [-20 10],'Color',colorCell{1});
+        line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
+        line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
+        
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
         
     end
     

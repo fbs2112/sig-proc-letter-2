@@ -32,7 +32,7 @@ for i = 1:size(ber,1)
     set(gca,'xtick',SNR);
         
     
-    formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i)],'en' , figProp );
+%     formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i)],'en' , figProp );
     
 end
 
@@ -56,13 +56,13 @@ for k = 1:length(fileVector)
         set(H,'interpreter','latex')
 
         xlabel('SNR [dB]','interpreter','latex');
-        ylim([1e-7 1e0])
+        ylim([1e-8 1e0])
         xlim([0 30]);
 
         set(gca,'xtick',SNR);
 
 
-    %     formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i)],'en' , figProp );
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i) '_' num2str(k)],'en' , figProp );
 
     end
     

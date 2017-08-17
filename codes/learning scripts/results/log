@@ -7,10 +7,19 @@ results03: resultados para SB-PNLMS DFE FF e threshold fixo;
 results04: resultados para SB-PNLMS DFE FB e threshold fixo;  
 
 
-results05: resultados para SB-BEACON e threshold fixo;  
+results05: resultados para SB-BEACON e threshold fixo e 100 rodadas de MonteCarlo;  
 
-results06: resultados para SB-BEACON DFE FF e FB e threshold fixo;  
+results06: resultados para SB-BEACON DFE FF e FB e threshold fixo e 100 rodadas de MonteCarlo;  
 
-results07: resultados para SB-BEACON DFE FF e threshold fixo;  
+results07: resultados para SB-BEACON DFE FF e threshold fixo e 100 rodadas de MonteCarlo;  
 
-results08: resultados para SB-BEACON DFE FB e threshold fixo;  
+results08: resultados para SB-BEACON DFE FB e threshold fixo e 100 rodadas de MonteCarlo;  
+
+
+results09: resultados para SB-BEACON e threshold fixo e 1000 rodadas de MonteCarlo;  
+
+results10: resultados para SB-BEACON DFE FF e FB e threshold fixo e 1000 rodadas de MonteCarlo;  
+
+results11: resultados para SB-BEACON DFE FF e threshold fixo e 1000 rodadas de MonteCarlo;  
+
+results12: resultados para SB-BEACON DFE FB e threshold fixo e 1000 rodadas de MonteCarlo;  
