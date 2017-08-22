@@ -21,7 +21,7 @@ fileIndex = 1;
 colorCell = {'b','r','y'};
 
 for k = 1:length(fileIndex)
-    load teste.mat;
+    load teste2.mat;
     for i = 1:size(e3,4)
         figure
         for j = 1:size(e3,3)

@@ -171,8 +171,8 @@ for etaIndex = 1:length(eta)
                             
                             gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
                             
-                            barGamma = sqrt(pi)*gammaAux(k+1)/2;
-                            barGamma = 4*sqrt(5*noisePower);
+                            barGamma = gammaAux(k+1);
+%                             barGamma = 4*sqrt(5*noisePower);
                             
                             if maxError > barGamma
                                 mu(k) = 1 - barGamma/maxError;
@@ -211,7 +211,7 @@ end
 % legend(eta.')
 
 
-save(['.' filesep 'results' filesep 'results02.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'results14.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);

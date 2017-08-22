@@ -19,7 +19,7 @@ w3 = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),l
 meanCount = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
 blindIt = zeros(maxIt,length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
 
-maxIt = 20;
+% maxIt = 20;
 
 for etaIndex = 1:length(eta)
     
@@ -176,9 +176,9 @@ for etaIndex = 1:length(eta)
                             delta(k) = d(k) - dfeOutput;
 
                             %
-                            gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*theta(:,k)'*theta(:,k)*noisePower + 1e-6);
-
-                            barGamma = 2*gammaAux(k+1);
+                            gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
+                            
+                            barGamma = gammaAux(k+1);
                             % %
 %                             barGamma = 4*sqrt(5*noisePower);
 
@@ -238,7 +238,7 @@ end
 % end
 % 
 % legend(eta.')
-save(['.' filesep 'results' filesep 'resultsDFEFF.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'results19.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);

@@ -23,3 +23,21 @@ results10: resultados para SB-BEACON DFE FF e FB e threshold fixo e 1000 rodadas
 results11: resultados para SB-BEACON DFE FF e threshold fixo e 1000 rodadas de MonteCarlo;  
 
 results12: resultados para SB-BEACON DFE FB e threshold fixo e 1000 rodadas de MonteCarlo;  
+
+
+results13: resultados para SB-PNLMS e threshold variante no tempo;  
+
+results14: resultados para SB-PNLMS DFE FF e FB e threshold variante no tempo;  
+
+results15: resultados para SB-PNLMS DFE FF e threshold variante no tempo;  
+
+results16: resultados para SB-PNLMS DFE FB e threshold variante no tempo;
+
+
+results17: resultados para SB-BEACON e threshold variante no tempo;
+
+results18: resultados para SB-BEACON DFE FF e FB e threshold variante no tempo; 
+
+results19: resultados para SB-BEACON DFE FF e threshold variante no tempo;
+
+results20: resultados para SB-BEACON DFE FB e threshold variante no tempo;

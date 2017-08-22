@@ -14,7 +14,7 @@ delayVector = feedforwardLength(1)+1;
 eta = 0:0.1:0.3;
 % eta = 0.1;
 
-maxIt = 20;
+% maxIt = 20;
 
 e3 = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
 w3 = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
@@ -172,8 +172,8 @@ for etaIndex = 1:length(eta)
                             
                             gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
                             
-                            barGamma = sqrt(pi)*gammaAux(k+1)/2;
-                            barGamma = 4*sqrt(5*noisePower);
+                            barGamma = gammaAux(k+1);
+%                             barGamma = 4*sqrt(5*noisePower);
                             
                             if maxError > barGamma
                                 mu(k) = 1 - barGamma/maxError;
@@ -212,7 +212,7 @@ end
 % legend(eta.')
 
 
-save(['.' filesep 'results' filesep 'results04.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'results16.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);
