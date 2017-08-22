@@ -13,6 +13,9 @@ load paramEq.mat;
 delayVector = N(1)+1;
 
 eta = 0:0.1:0.3;
+maxIt = 20;
+
+% alpha = 0.95;
 
 e3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
 w3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
@@ -146,9 +149,9 @@ for etaIndex = 1:length(eta)
                         %
                         gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
 
-                        barGamma = sqrt(pi)*gammaAux(k+1)/2;
+                        barGamma = 2*gammaAux(k+1);
                         % %
-                        barGamma = 4*sqrt(5*noisePower);
+%                         barGamma = 4*sqrt(5*noisePower);
 
                         maxError = max(abs(real(e(k))),abs(imag(conj(e(k)))));
 
@@ -193,7 +196,7 @@ end
 % end
 % 
 % legend(eta.')
-save(['.' filesep 'results' filesep 'results01.mat'],'w3','e3','meanCount','blindIt');
+save(['.' filesep 'results' filesep 'teste2.mat'],'w3','e3','meanCount','blindIt');
 
 rmpath(['..' filesep 'simParameters' filesep]);
 rmpath(['..' filesep 'Utils' filesep]);

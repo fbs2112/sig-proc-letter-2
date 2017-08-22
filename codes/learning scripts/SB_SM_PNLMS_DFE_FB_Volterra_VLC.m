@@ -14,7 +14,7 @@ delayVector = feedforwardLength(1)+1;
 eta = 0:0.1:0.3;
 % eta = 0.1;
 
-% maxIt = 20;
+maxIt = 20;
 
 e3 = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
 w3 = cell(length(delayVector),length(feedforwardLength),length(feedbackLength),length(modulationIndexVector),length(eta));
@@ -23,7 +23,7 @@ blindIt = zeros(maxIt,length(delayVector),length(feedforwardLength),length(feedb
 
 for etaIndex = 1:length(eta)
     
-    for modulationIndexLoop = 1:1%length(modulationIndexVector)
+    for modulationIndexLoop = 1:length(modulationIndexVector)
         
         modulationIndex = modulationIndexVector(modulationIndexLoop);
         maxVoltage = VDC*(1+modulationIndex);

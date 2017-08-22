@@ -11,7 +11,7 @@ fontsize = 24;
 
 figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'figDim', [1 1 800 600]);
 
-load resultsBER01.mat;
+load resultsBER05.mat;
 
 for i = 1:size(ber,1)
     
@@ -32,14 +32,12 @@ for i = 1:size(ber,1)
     set(gca,'xtick',SNR);
         
     
-%     formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i)],'en' , figProp );
+    formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFFBEACON'  num2str(i)],'en' , figProp );
     
 end
 
 
-fileVector = 2:4;
-
-
+fileVector = 6:8;
 
 for k = 1:length(fileVector)
     load(['resultsBER0' num2str(fileVector(k)) '.mat']);
@@ -62,7 +60,7 @@ for k = 1:length(fileVector)
         set(gca,'xtick',SNR);
 
 
-        formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFF'  num2str(i) '_' num2str(k)],'en' , figProp );
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-07-12' filesep 'berFFBEACON'  num2str(i) '_' num2str(k)],'en' , figProp );
 
     end
     

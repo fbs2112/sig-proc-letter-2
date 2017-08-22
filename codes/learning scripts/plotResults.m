@@ -65,7 +65,7 @@ for k = 1:length(fileIndex)
         for j = 1:size(e3,3)
             x = e3{1,1,j,i};
             blindItAux = blindIt(:,1,1,j,i);
-            meanBlindIt(k,j,i) = round(mean(blindItAux));
+            meanBlindIt(k,j,i) = round(mean(blindItAux(blindItAux~=0)));
             aux = find(x,1);
 %             if j~=size(e3,3) && i ~= size(e3,4) && k~=2
                 plot(10*log10(x(aux:end)));
@@ -88,7 +88,7 @@ for k = 1:length(fileIndex)
         line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
         line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
         xlim([0 5000]);
-        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
 
     end
 end
@@ -108,21 +108,30 @@ colorCell = {'b','r','y'};
 fileIndex = [2 3 4];
 
 for k = 1:length(fileIndex)
-    load(['results0' num2str(fileIndex(k)) '.mat']);
+    
+    if fileIndex(k) < 10
+        load(['results0' num2str(fileIndex(k)) '.mat']);    
+    else
+        load(['results' num2str(fileIndex(k)) '.mat']); 
+    end
+    
     for i = 1:size(e3,5)
         figure
         for j = 1:size(e3,4)
             x = e3{1,1,1,j,i};
             blindItAux = blindIt(:,1,1,1,j,i);
-            meanBlindIt(k,j,i) = round(mean(blindItAux));
+            meanBlindIt(k,j,i) = round(mean(blindItAux(blindItAux~=0)));
             aux = find(x,1);
             plot(10*log10(x(aux:end)));
+            if isnan(meanBlindIt(k,j,i))
+                meanBlindIt(k,j,i) = 0;
+            end
 %             line([meanBlindIt(k,j,i) meanBlindIt(k,j,i)], [-15 10],'Color',colorCell{j});
             if i > 1 && meanBlindIt(k,j,i)
-                upCountTrans(j,i) = mean(meanCount{1,1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
-                upCountSS(j,i) = mean(meanCount{1,1,1,j,i}(meanBlindIt(k,j,i):end))*100;
+                upCountTrans(k,j,i) = mean(meanCount{1,1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
+                upCountSS(k,j,i) = mean(meanCount{1,1,1,j,i}(meanBlindIt(k,j,i):end))*100;
             else
-                upCount(j) = mean(meanCount{1,1,1,j,i})*100;
+                upCount(k,j) = mean(meanCount{1,1,1,j,i})*100;
             end
             hold on
 
@@ -138,7 +147,7 @@ for k = 1:length(fileIndex)
         line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
         line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
         
-        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-08' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
+        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
         
     end
     

@@ -17,7 +17,7 @@ noisePower = 1e-3;  %desired measurement noise power
 changingIteration = 5000;
 blindIteration = 1500;
 alpha = 0.9;
-beta = 0.45;
+beta = 4.5;
 
 %--------------Simulation parameters--------------------------------------%
 
