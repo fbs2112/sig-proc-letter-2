@@ -19,7 +19,7 @@ w3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta
 meanCount = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
 blindIt = zeros(maxIt,length(delayVector),length(N),length(modulationIndexVector),length(eta));
 
-% maxIt = 10;
+maxIt = 10;
 
 for etaIndex = 1:length(eta)
     
@@ -151,7 +151,7 @@ for etaIndex = 1:length(eta)
                         delta(k) = d(k) - theta(:,k)'*xAP;
 
                         %
-                        gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
+                        gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*theta(:,k)'*theta(:,k)*noisePower + 1e-6);
                             
                         barGamma = gammaAux(k+1);
                         % %

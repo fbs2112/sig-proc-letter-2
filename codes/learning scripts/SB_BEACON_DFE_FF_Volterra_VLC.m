@@ -176,7 +176,7 @@ for etaIndex = 1:length(eta)
                             delta(k) = d(k) - dfeOutput;
 
                             %
-                            gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*w(:,k)'*w(:,k)*noisePower);
+                            gammaAux(k+1) = alpha*gammaAux(k) + (1-alpha)*sqrt(beta*theta(:,k)'*theta(:,k)*noisePower + 1e-6);
                             
                             barGamma = gammaAux(k+1);
                             % %

@@ -11,55 +11,22 @@ linewidth = 1.5;
 fontname = 'Times';
 fontsize = 24;
 
+figProp = struct( 'size' , fontsize , 'font' ,fontname , 'lineWidth' , linewidth, 'figDim', [1 1 800 600]);  
 
-figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'figDim', [1 1 800 600]);  
 
-% load NLMS.mat;
-% 
-% it  = 4000;
-% 
-% 
-% for i = 1:size(e5,2)
-%     figure
-%     
-%     aux = find(e5{1,i}{1}{1},1);
-%     plot(10*log10(e5{1,i}{1}{1}(aux:end)));
-%     
-%     c1(i) = mean(meanCount3{1,i}{1}{1}(aux:it));
-% end
-% 
-% 
-% load PNLMS.mat;
-% 
-% 
-% for i = 1:size(e5,2)
-%     figure
-%     
-%     aux = find(e5{1,i}{1}{1},1);
-%     plot(10*log10(e5{1,i}{1}{1}(aux:end)));
-%     c2(i) = mean(meanCount3{1,i}{1}{1}(aux:it));
-% end
-% 
-% 
-% 
-% load DFE_PNLMS.mat;
-% 
-% 
-% for i = 1:size(e5,1)
-%     figure
-%     
-%     aux = find(e5{i,1}{1}{1},1);
-%     plot(10*log10(e5{i,1}{1}{1}(aux:end)));
-%     c3(i) = mean(meanCount3{i,1}{1}{1}(aux:it));
-% end
-% 
-fileIndex = [1 9];
+fileIndex = [13 17];
 
 
 colorCell = {'b','r','y'};
 
 for k = 1:length(fileIndex)
-    load(['results0' num2str(fileIndex(k)) '.mat']);
+        
+    if fileIndex(k) < 10
+        load(['results0' num2str(fileIndex(k)) '.mat']);    
+    else
+        load(['results' num2str(fileIndex(k)) '.mat']); 
+    end
+    
     for i = 1:size(e3,4)
         figure
         for j = 1:size(e3,3)
@@ -67,9 +34,7 @@ for k = 1:length(fileIndex)
             blindItAux = blindIt(:,1,1,j,i);
             meanBlindIt(k,j,i) = round(mean(blindItAux(blindItAux~=0)));
             aux = find(x,1);
-%             if j~=size(e3,3) && i ~= size(e3,4) && k~=2
                 plot(10*log10(x(aux:end)));
-%                 line([meanBlindIt(k,j,i) meanBlindIt(k,j,i)], [-20 10],'Color',colorCell{j});
                  if i > 1 && meanBlindIt(k,j,i)
                     upCountTrans(k,j,i) = mean(meanCount{1,1,j,i}(aux:meanBlindIt(k,j,i)-1))*100;
                     upCountSS(k,j,i) = mean(meanCount{1,1,j,i}(meanBlindIt(k,j,i):end))*100;
@@ -88,7 +53,7 @@ for k = 1:length(fileIndex)
         line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
         line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
         xlim([0 5000]);
-        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
+%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mse' num2str(i) '_' num2str(k)],'en' , figProp );
 
     end
 end
