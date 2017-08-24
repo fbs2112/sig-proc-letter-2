@@ -6,6 +6,8 @@ resultsBER03: resultados para SB-SM-PNLMS DFE FF e threshold fixo;
 
 resultsBER04: resultados para SB-SM-PNLMS DFE FB e threshold fixo;
 
+
+
 resultsBER05: resultados para SB-BEACON e threshold fixo;
 
 resultsBER06: resultados para SB-BEACOM DFE FF e FB e threshold fixo;
@@ -13,3 +15,12 @@ resultsBER06: resultados para SB-BEACOM DFE FF e FB e threshold fixo;
 resultsBER07: resultados para SB-BEACON DFE FF e threshold fixo;
 
 resultsBER08: resultados para SB-BEACON DFE FB e threshold fixo;
+
+
+resultsBER09: resultados para SB-SM-PNLMS e threshold variante no tempo;
+
+resultsBER10: resultados para SB-SM-PNLMS DFE FF e FB e threshold variante no tempo;
+
+resultsBER11: resultados para SB-SM-PNLMS DFE FF e threshold variante no tempo;
+
+resultsBER12: resultados para SB-SM-PNLMS DFE FB e threshold variante no tempo;

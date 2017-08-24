@@ -13,7 +13,7 @@ addpath(['..' filesep 'simParameters']);
 
 load paramDFE_FF.mat;
 load param_feedforwardEq.mat;
-load results03.mat;
+load results15.mat;
 
 eta = 0:0.1:0.3;
 
@@ -149,7 +149,7 @@ for etaIndex = 1:length(eta)
 end
 
 
-save(['.' filesep 'results' filesep 'resultsBER03.mat'],'SNR','ber');
+save(['.' filesep 'results' filesep 'resultsBER11.mat'],'SNR','ber');
 
 rmpath(['..' filesep 'berParameters']);
 rmpath(['..' filesep 'Utils']);
