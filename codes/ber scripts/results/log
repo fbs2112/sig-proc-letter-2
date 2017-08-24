@@ -24,3 +24,12 @@ resultsBER10: resultados para SB-SM-PNLMS DFE FF e FB e threshold variante no te
 resultsBER11: resultados para SB-SM-PNLMS DFE FF e threshold variante no tempo;
 
 resultsBER12: resultados para SB-SM-PNLMS DFE FB e threshold variante no tempo;
+
+
+resultsBER13: resultados para SB-BEACON e threshold variante no tempo;
+
+resultsBER14: resultados para SB-BEACON DFE FF e FB e threshold variante no tempo;
+
+resultsBER15: resultados para SB-BEACON DFE FF e threshold variante no tempo;
+
+resultsBER16: resultados para SB-BEACON DFE FB e threshold variante no tempo;

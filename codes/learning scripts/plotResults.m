@@ -70,7 +70,7 @@ figProp = struct( 'size' , 24 , 'font' ,fontname , 'lineWidth' , linewidth, 'fig
 % 
 colorCell = {'b','r','y'};
 
-fileIndex = [2 3 4];
+fileIndex = [18 19 20];
 
 for k = 1:length(fileIndex)
     
@@ -112,7 +112,7 @@ for k = 1:length(fileIndex)
         line([meanBlindIt(k,2,i) meanBlindIt(k,2,i)], [-20 10],'Color',colorCell{2});
         line([meanBlindIt(k,3,i) meanBlindIt(k,3,i)], [-20 10],'Color',colorCell{3});
         
-        formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
+%         formatFig( gcf ,['.' filesep 'figs' filesep '2017-08-09' filesep 'mseDFE' num2str(i) '_' num2str(k)],'en' , figProp );
         
     end
     
