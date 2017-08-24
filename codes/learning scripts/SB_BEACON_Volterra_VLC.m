@@ -19,7 +19,7 @@ w3 = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta
 meanCount = cell(length(delayVector),length(N),length(modulationIndexVector),length(eta));
 blindIt = zeros(maxIt,length(delayVector),length(N),length(modulationIndexVector),length(eta));
 
-maxIt = 10;
+% maxIt = 10;
 
 for etaIndex = 1:length(eta)
     
